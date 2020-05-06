@@ -10,11 +10,27 @@ import (
 
 func main() {
 	os.Args = os.Args[1:]
+	// help, --help are the same thing
+	// both are mutually exclusive with any other arguments
+	if len(os.Args) > 0 && (os.Args[0] == "help" || os.Args[0] == "--help") {
+		os.Args = os.Args[0:1]
+	}
 	switch l := len(os.Args); l {
 	case 0:
-		fmt.Println("Error: no first argument (try 'set', 'unset', or 'check')")
+		fmt.Println("Error: no arguments provided (try 'goalias help')")
 	case 1:
-		fmt.Println("Error: goalias requires at least two arguments")
+		switch strings.ToLower(os.Args[0]) {
+		case "help", "--help":
+			fmt.Printf("Usage:\n\n")
+			fmt.Println("goalias [--]help")
+			fmt.Println("goalias set [aliasname] [alias]")
+			fmt.Println("goalias unset [aliasname]")
+			fmt.Println("goalias check [aliasname]")
+			fmt.Println()
+			os.Exit(0)
+		default:
+			fmt.Println("Error: goalias requires at least two arguments")
+		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
 		case "check":
