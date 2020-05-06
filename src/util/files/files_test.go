@@ -1,14 +1,21 @@
 package files
 
 import (
+	"runtime"
 	"testing"
 )
 
 //
-// Note: these tests will all fail if you aren't on a Unix system.
+// Note: these tests will all pass if you aren't on a Unix system.
 //
+func autopass(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.SkipNow()
+	}
+}
 
 func TestExists(t *testing.T) {
+	autopass(t)
 	if !Exists("/usr/bin/ls") {
 		t.FailNow()
 	}
@@ -18,6 +25,7 @@ func TestExists(t *testing.T) {
 }
 
 func TestBinExists(t *testing.T) {
+	autopass(t)
 	if !BinExists("ls") {
 		t.FailNow()
 	}
@@ -28,6 +36,7 @@ func TestBinExists(t *testing.T) {
 
 // For this to pass, you need to create /usr/local/bin/goalias-test
 func TestUsrLocalBinExists(t *testing.T) {
+	autopass(t)
 	if !UsrLocalBinExists("goalias-test") {
 		t.FailNow()
 	}
