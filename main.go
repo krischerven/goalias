@@ -38,7 +38,7 @@ func main() {
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
 		default:
-			fmt.Println("Error: goalias requires at least two arguments")
+			fmt.Println("Usage: 'goalias [help|debugger]' or 'goalias [set|unset|check] [aliasname] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
