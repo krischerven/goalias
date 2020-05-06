@@ -1,2 +1,2 @@
 # goalias
-## A more flexible alternative to ~/.bash_aliases
+A more flexible alternative to ~/.bash_aliases
