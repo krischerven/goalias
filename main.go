@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/krischerven/goalias/src/util/files"
 	"os"
+	"runtime"
 	"strings"
 )
 
@@ -28,6 +29,14 @@ func main() {
 			fmt.Println("goalias check [aliasname]")
 			fmt.Println()
 			os.Exit(0)
+		case "debugger":
+			ms := runtime.MemStats{}
+			runtime.ReadMemStats(&ms)
+			fmt.Printf("Debugger:\n\n")
+			fmt.Println(fmt.Sprintf("Heap Size: %d KiB", ms.HeapAlloc/1024))
+			fmt.Println("# Live Objects:", ms.HeapObjects)
+			fmt.Println("# Allocs:", ms.Mallocs)
+			fmt.Println("# Frees:", ms.Frees)
 		default:
 			fmt.Println("Error: goalias requires at least two arguments")
 		}
