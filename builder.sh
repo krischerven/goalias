@@ -1,5 +1,5 @@
 mkdir -p /tmp/goalias
-cp -r "$PWD/." /tmp/goalias
+sudo cp -r "$PWD/." /tmp/goalias
 odir="$PWD"
 cd /tmp/goalias
 go build
