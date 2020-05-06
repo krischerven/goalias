@@ -34,11 +34,12 @@ func main() {
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
 		case "check":
-			s, err := files.Read(os.Args[1])
+			file := files.Bin(os.Args[1])
+			s, err := files.Read(file)
 			if err != nil {
 				fmt.Println(fmt.Sprintf("Go Error: '%s'", err))
 			} else {
-				fmt.Println(fmt.Sprintf("# %s\n", os.Args[1]) + s)
+				fmt.Println(fmt.Sprintf("# %s\n", file) + s)
 			}
 		case "set":
 			unimplemented(0)
