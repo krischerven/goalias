@@ -44,3 +44,13 @@ func TestUsrLocalBinExists(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+// For this to pass, you need to create /usr/local/bin/goalias-test
+func TestBin(t *testing.T) {
+	if Bin("goalias-test") != "/usr/local/bin/goalias-test" {
+		t.FailNow()
+	}
+	if Bin("ls") != "/usr/bin/ls" {
+		t.FailNow()
+	}
+}

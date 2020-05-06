@@ -36,6 +36,18 @@ func UsrLocalBinExists(path string) bool {
 	return Exists("/usr/local/bin/" + path)
 }
 
+func Bin(path string) string {
+	if Exists("/usr/local/bin/" + path) {
+		return "/usr/local/bin/" + path
+	} else if Exists("/usr/bin/" + path) {
+		return "/usr/bin/" + path
+	} else if Exists("/bin/" + path) {
+		return "/bin/" + path
+	} else {
+		return path
+	}
+}
+
 func Read(path string) (string, error) {
 	b, err := ioutil.ReadFile(path)
 	return string(b), err
