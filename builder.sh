@@ -1,7 +1,13 @@
 #!/bin/bash
 mkdir -p /tmp/goalias
 sudo chmod -R 0777 /tmp/goalias
-rsync -a --exclude .git/ --exclude .gitignore --exclude *.un~ --exclude *.swp --exclude *.swo --exclude *.swn --exclude bin/ "$PWD/." /tmp/goalias
+
+# copy important files
+rsync \
+	-a \
+	--exclude .git/ --exclude .gitignore --exclude *.un~ --exclude *.swp \
+	--exclude *.swo --exclude *.swn --exclude bin/ "$PWD/." /tmp/goalias
+
 odir="$PWD"
 cd /tmp/goalias/src
 if [ -f src ]; then
