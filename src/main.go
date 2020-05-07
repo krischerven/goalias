@@ -29,7 +29,7 @@ func main() {
 			fmt.Println("goalias check [aliasname]")
 			fmt.Println()
 			os.Exit(0)
-		case "debugger":
+		case "debug":
 			ms := runtime.MemStats{}
 			runtime.ReadMemStats(&ms)
 			fmt.Printf("Debugger:\n\n")
@@ -38,7 +38,7 @@ func main() {
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
 		default:
-			fmt.Println("Usage: 'goalias [help|debugger]' or 'goalias [set|unset|check] [aliasname] [alias?]'")
+			fmt.Println("Usage: 'goalias [help|debug]' or 'goalias [set|unset|check] [aliasname] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
