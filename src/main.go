@@ -41,8 +41,7 @@ func main() {
 		os.Exit(0)
 	} else if !files.Exists(registry) {
 		if _, err := os.Create(registry); err != nil {
-			fmt.Println(goerr(err))
-			os.Exit(0)
+			handle(err, goerr)
 		} else {
 			fmt.Printf("Created registry at %s\n", registry)
 		}
@@ -78,14 +77,12 @@ func main() {
 		case "check":
 			file := files.Bin(os.Args[1])
 			s, err := files.Read(file)
-			if err != nil {
-				fmt.Println(goerr(err))
-			} else {
-				fmt.Printf("# %s\n%s\n", file, s)
-			}
+			handle(err, goerr)
+			fmt.Printf("# %s\n%s\n", file, s)
 		case "set":
 			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
 		case "unset":
+			unregister(os.Args[1])
 			unimplemented(1)
 		default:
 			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
@@ -95,6 +92,7 @@ func main() {
 		case "check":
 			fmt.Println("Error: goalias check takes exactly one argument (2 provided)")
 		case "set":
+			register(os.Args[1])
 			unimplemented(2)
 		case "unset":
 			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
@@ -112,4 +110,19 @@ func unimplemented(i uint) {
 
 func goerr(e error) string {
 	return fmt.Sprintf("Go Error: '%s'", e)
+}
+
+func handle(e error, handler func(error) string) {
+	if e != nil {
+		fmt.Println(handler(e))
+		os.Exit(0)
+	}
+}
+
+func register(string) {
+	// TBI
+}
+
+func unregister(string) {
+	// TBI
 }
