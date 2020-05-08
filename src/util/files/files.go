@@ -3,6 +3,7 @@ package files
 import (
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 func Exists(path string) bool {
@@ -46,6 +47,16 @@ func Bin(path string) string {
 	} else {
 		return path
 	}
+}
+
+func Dir(path string) string {
+	split := strings.Split(path, "/")
+	ret := ""
+	for i := 0; i < len(split)-1; i++ {
+		ret += split[i]
+		ret += "/"
+	}
+	return ret
 }
 
 func Read(path string) (string, error) {
