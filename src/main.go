@@ -113,7 +113,7 @@ func unimplemented(i uint) {
 
 func mustroot() {
 	if os.Geteuid() != 0 {
-		fmt.Println("Error: You must be running as the root user to modify this file.")
+		fmt.Println("Error: You must be running as the root user to run this command.")
 		os.Exit(0)
 	}
 }
