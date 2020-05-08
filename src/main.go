@@ -85,9 +85,9 @@ func main() {
 		switch strings.ToLower(os.Args[0]) {
 		case "check":
 			file := files.Bin(os.Args[1])
-			s, err := files.Read(file)
+			b, err := files.Read(file)
 			handle(err, goerr)
-			fmt.Printf("# %s\n%s\n", file, s)
+			fmt.Printf("# %s\n%s\n", file, b)
 		case "set":
 			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
 		case "unset":
@@ -144,11 +144,11 @@ func handle(e error, handler func(error) string) {
 }
 
 func register(name string, alias string) {
-	r, err := files.Read(registry)
+	b, err := files.Read(registry)
 	handle(err, goerr)
 	ioutil.WriteFile(
 		registry,
-		append([]byte(r), []byte(fmt.Sprintf("%s=%s\n", name, alias))...),
+		append(b, []byte(fmt.Sprintf("%s=%s\n", name, alias))...),
 		0755,
 	)
 }

@@ -59,7 +59,7 @@ func Dir(path string) string {
 	return ret
 }
 
-func Read(path string) (string, error) {
+func Read(path string) ([]byte, error) {
 	b, err := ioutil.ReadFile(path)
-	return string(b), err
+	return b, err
 }
