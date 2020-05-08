@@ -176,7 +176,7 @@ func unregister(name string) {
 	lines := bytes.Split(b, []byte("\n"))
 	for i, line := range lines {
 		if bytes.HasPrefix(line, []byte(fmt.Sprintf("%s=", name))) {
-			lines[i] = nil
+			lines = append(lines[:i], lines[i+1:]...)
 			break
 		}
 	}
