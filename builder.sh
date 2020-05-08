@@ -1,4 +1,12 @@
 #!/bin/bash
+
+# run vet.sh first to catch Sprintf() errors and such
+./vet.sh
+
+# run tests to catch other errors
+go test ./...
+
+# create the temporary build directory
 mkdir -p /tmp/goalias
 sudo chmod -R 0755 /tmp/goalias
 
@@ -25,3 +33,5 @@ fi
 if [ -f /tmp/goalias/src/src.exe ]; then
 	cp /tmp/goalias/src/src.exe "$PWD/bin/goalias.exe"
 fi
+
+echo "done"
