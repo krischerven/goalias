@@ -14,9 +14,23 @@ const (
 	registry = "/etc/goalias/registry.txt"
 )
 
+var (
+	verbose = false
+)
+
 func main() {
 	// first arg is filename
 	os.Args = os.Args[1:]
+	// if the second arg is --v, show all output)
+	if len(os.Args) > 0 && os.Args[0] == "--v" {
+		verbose = true
+		os.Args = os.Args[1:]
+	}
+	// help, --help are the same thing
+	// both are mutually exclusive with any other arguments
+	if len(os.Args) > 0 && (os.Args[0] == "help" || os.Args[0] == "--help") {
+		os.Args = os.Args[0:1]
+	}
 	// create registry files
 	if err := os.MkdirAll(files.Dir(registry), 0755); err != nil {
 		fmt.Print(goerr(err))
@@ -32,13 +46,8 @@ func main() {
 		} else {
 			fmt.Printf("Created registry at %s\n", registry)
 		}
-	} else {
+	} else if verbose {
 		fmt.Printf("Registry already exists at %s\n", registry)
-	}
-	// help, --help are the same thing
-	// both are mutually exclusive with any other arguments
-	if len(os.Args) > 0 && (os.Args[0] == "help" || os.Args[0] == "--help") {
-		os.Args = os.Args[0:1]
 	}
 	switch l := len(os.Args); l {
 	case 0:
@@ -62,7 +71,7 @@ func main() {
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
 		default:
-			fmt.Println("Usage: 'goalias [help|debug]' or 'goalias [set|unset|check] [aliasname] [alias?]'")
+			fmt.Println("Usage: 'goalias [--v?] [help|debug]' or 'goalias [--v?] [set|unset|check] [aliasname] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
