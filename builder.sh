@@ -1,6 +1,6 @@
 #!/bin/bash
 mkdir -p /tmp/goalias
-sudo chmod -R 0777 /tmp/goalias
+sudo chmod -R 0755 /tmp/goalias
 
 # copy important files
 rsync \
