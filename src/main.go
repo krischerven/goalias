@@ -84,7 +84,7 @@ func main() {
 				fmt.Printf("# %s\n%s\n", file, s)
 			}
 		case "set":
-			unimplemented(0)
+			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
 		case "unset":
 			unimplemented(1)
 		default:
