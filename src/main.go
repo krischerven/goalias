@@ -123,7 +123,11 @@ func handle(e error, handler func(error) string) {
 func register(name string, alias string) {
 	r, err := files.Read(registry)
 	handle(err, goerr)
-	ioutil.WriteFile(registry, append([]byte(r), []byte(fmt.Sprintf("%s=%s\n", name, alias))...), 0755)
+	ioutil.WriteFile(
+		registry,
+		append([]byte(r), []byte(fmt.Sprintf("%s=%s\n", name, alias))...),
+		0755,
+	)
 }
 
 func unregister(string) {
