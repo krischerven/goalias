@@ -97,7 +97,7 @@ func main() {
 		case "set":
 			unimplemented(2)
 		case "unset":
-			unimplemented(3)
+			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
 		default:
 			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
 		}
