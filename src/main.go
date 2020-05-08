@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"github.com/krischerven/goalias/src/util/files"
+	"io/ioutil"
 	"os"
 	"runtime"
 	"strings"
@@ -92,7 +93,7 @@ func main() {
 		case "check":
 			fmt.Println("Error: goalias check takes exactly one argument (2 provided)")
 		case "set":
-			register(os.Args[1])
+			register(os.Args[1], os.Args[2])
 			unimplemented(2)
 		case "unset":
 			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
@@ -119,8 +120,10 @@ func handle(e error, handler func(error) string) {
 	}
 }
 
-func register(string) {
-	// TBI
+func register(name string, alias string) {
+	r, err := files.Read(registry)
+	handle(err, goerr)
+	ioutil.WriteFile(registry, append([]byte(r), []byte(fmt.Sprintf("%s=%s\n", name, alias))...), 0755)
 }
 
 func unregister(string) {
