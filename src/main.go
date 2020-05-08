@@ -83,6 +83,7 @@ func main() {
 		case "set":
 			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
 		case "unset":
+			mustroot()
 			unregister(os.Args[1])
 			unimplemented(1)
 		default:
@@ -93,6 +94,7 @@ func main() {
 		case "check":
 			fmt.Println("Error: goalias check takes exactly one argument (2 provided)")
 		case "set":
+			mustroot()
 			register(os.Args[1], os.Args[2])
 			unimplemented(2)
 		case "unset":
@@ -107,6 +109,13 @@ func main() {
 
 func unimplemented(i uint) {
 	panic(fmt.Sprintf("unimplemented (%d)", i))
+}
+
+func mustroot() {
+	if os.Geteuid() != 0 {
+		fmt.Println("Error: You must be running as the root user to modify this file.")
+		os.Exit(0)
+	}
 }
 
 func goerr(e error) string {
