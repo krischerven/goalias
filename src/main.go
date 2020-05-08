@@ -2,6 +2,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/krischerven/goalias/src/util/files"
 	"io/ioutil"
@@ -102,7 +103,9 @@ func main() {
 		case "check":
 			fmt.Println("Error: goalias check takes exactly one argument (2 provided)")
 		case "set":
-			if files.UsrLocalBinExists(os.Args[1]) {
+			if registered(os.Args[1]) {
+				fmt.Println("Error: an alias with this name already exists.")
+			} else if files.UsrLocalBinExists(os.Args[1]) {
 				fmt.Println("Error: a file with this name already exists.")
 			} else {
 				mustroot()
@@ -155,6 +158,12 @@ func register(name string, alias string) {
 		append(b, []byte(fmt.Sprintf("%s=%s\n", name, alias))...),
 		0755,
 	)
+}
+
+func registered(name string) bool {
+	b, err := files.Read(registry)
+	handle(err, goerr)
+	return bytes.Contains(b, []byte(fmt.Sprintf("%s=", name)))
 }
 
 func unregister(string) {
