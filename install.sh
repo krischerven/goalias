@@ -1,6 +1,5 @@
 #!/bin/bash
 (rm bin/goalias) > /dev/null 2>&1
-./vet.sh
 ./builder.sh
 if [ -f bin/goalias ]; then
 	(sudo rm /usr/local/bin/goalias) > /dev/null 2>&1
