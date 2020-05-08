@@ -9,8 +9,32 @@ import (
 	"strings"
 )
 
+const (
+	// the place where we keep track of our aliases
+	registry = "/etc/goalias/registry.txt"
+)
+
 func main() {
+	// first arg is filename
 	os.Args = os.Args[1:]
+	// create registry files
+	if err := os.MkdirAll(files.Dir(registry), 0755); err != nil {
+		fmt.Print(fmt.Sprintf("Go Error: '%s'", err))
+		if strings.HasSuffix(err.Error(), "permission denied") {
+			fmt.Print(" (try running goalias with sudo the first time)")
+		}
+		fmt.Println()
+		os.Exit(0)
+	} else if !files.Exists(registry) {
+		if _, err := os.Create(registry); err != nil {
+			fmt.Println(fmt.Sprintf("Go Error: '%s'", err))
+			os.Exit(0)
+		} else {
+			fmt.Println(fmt.Sprintf("Created registry at %s", registry))
+		}
+	} else {
+		fmt.Println(fmt.Sprintf("Registry already exists at %s", registry))
+	}
 	// help, --help are the same thing
 	// both are mutually exclusive with any other arguments
 	if len(os.Args) > 0 && (os.Args[0] == "help" || os.Args[0] == "--help") {
