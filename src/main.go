@@ -93,8 +93,12 @@ func main() {
 			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
 		case "unset":
 			mustroot()
-			unregister(os.Args[1])
-			unimplemented(1)
+			if registered(os.Args[1]) {
+				unregister(os.Args[1])
+				handle(os.Remove(fmt.Sprintf("/usr/local/bin/%s", os.Args[1])), goerr)
+			} else {
+				fmt.Println("Error: this alias is not registered.")
+			}
 		default:
 			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
 		}
