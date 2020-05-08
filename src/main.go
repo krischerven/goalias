@@ -32,6 +32,14 @@ func main() {
 	if len(os.Args) > 0 && (os.Args[0] == "help" || os.Args[0] == "--help") {
 		os.Args = os.Args[0:1]
 	}
+	// for 'goalias set', we want to merge all args >= 2 into the second argument
+	if len(os.Args) > 0 && os.Args[0] == "set" && len(os.Args) > 2 {
+		for i := 3; i < len(os.Args); i++ {
+			os.Args[2] += " "
+			os.Args[2] += os.Args[i]
+		}
+		os.Args = os.Args[0:3]
+	}
 	// create registry files
 	if err := os.MkdirAll(files.Dir(registry), 0755); err != nil {
 		fmt.Print(goerr(err))
@@ -96,7 +104,13 @@ func main() {
 		case "set":
 			mustroot()
 			register(os.Args[1], os.Args[2])
-			unimplemented(2)
+			handle(
+				ioutil.WriteFile(
+					fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
+					[]byte(fmt.Sprintf("%s", os.Args[2])), 0755,
+				),
+				goerr,
+			)
 		case "unset":
 			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
 		default:
