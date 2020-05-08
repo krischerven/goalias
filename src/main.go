@@ -102,15 +102,19 @@ func main() {
 		case "check":
 			fmt.Println("Error: goalias check takes exactly one argument (2 provided)")
 		case "set":
-			mustroot()
-			register(os.Args[1], os.Args[2])
-			handle(
-				ioutil.WriteFile(
-					fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
-					[]byte(fmt.Sprintf("%s", os.Args[2])), 0755,
-				),
-				goerr,
-			)
+			if files.UsrLocalBinExists(os.Args[1]) {
+				fmt.Println("Error: a file with this name already exists.")
+			} else {
+				mustroot()
+				register(os.Args[1], os.Args[2])
+				handle(
+					ioutil.WriteFile(
+						fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
+						[]byte(fmt.Sprintf("%s", os.Args[2])), 0755,
+					),
+					goerr,
+				)
+			}
 		case "unset":
 			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
 		default:
