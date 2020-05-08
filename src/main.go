@@ -166,6 +166,19 @@ func registered(name string) bool {
 	return bytes.Contains(b, []byte(fmt.Sprintf("%s=", name)))
 }
 
-func unregister(string) {
-	// TBI
+func unregister(name string) {
+	b, err := files.Read(registry)
+	handle(err, goerr)
+	lines := bytes.Split(b, []byte("\n"))
+	for i, line := range lines {
+		if bytes.HasPrefix(line, []byte(fmt.Sprintf("%s=", name))) {
+			lines[i] = nil
+			break
+		}
+	}
+	ioutil.WriteFile(
+		registry,
+		bytes.Join(lines, []byte("\n")),
+		0755,
+	)
 }
