@@ -30,10 +30,10 @@ func main() {
 			fmt.Println(goerr(err))
 			os.Exit(0)
 		} else {
-			fmt.Println(fmt.Sprintf("Created registry at %s", registry))
+			fmt.Printf("Created registry at %s\n", registry)
 		}
 	} else {
-		fmt.Println(fmt.Sprintf("Registry already exists at %s", registry))
+		fmt.Printf("Registry already exists at %s\n", registry)
 	}
 	// help, --help are the same thing
 	// both are mutually exclusive with any other arguments
@@ -57,7 +57,7 @@ func main() {
 			ms := runtime.MemStats{}
 			runtime.ReadMemStats(&ms)
 			fmt.Printf("Debugger:\n\n")
-			fmt.Println(fmt.Sprintf("Heap Size: %d KiB", ms.HeapAlloc/1024))
+			fmt.Printf("Heap Size: %d KiB\n", ms.HeapAlloc/1024)
 			fmt.Println("# Live Objects:", ms.HeapObjects)
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
@@ -72,14 +72,14 @@ func main() {
 			if err != nil {
 				fmt.Println(goerr(err))
 			} else {
-				fmt.Println(fmt.Sprintf("# %s\n", file) + s)
+				fmt.Printf("# %s\n%s\n", file, s)
 			}
 		case "set":
 			unimplemented(0)
 		case "unset":
 			unimplemented(1)
 		default:
-			fmt.Println(fmt.Sprintf("Error: unrecognized argument '%s'", os.Args[0]))
+			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
 		}
 	case 3:
 		switch strings.ToLower(os.Args[0]) {
@@ -90,10 +90,10 @@ func main() {
 		case "unset":
 			unimplemented(3)
 		default:
-			fmt.Println(fmt.Sprintf("Error: unrecognized argument '%s'", os.Args[0]))
+			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
 		}
 	default:
-		fmt.Println(fmt.Sprintf("Error: bad number of arguments (%d provided)", l))
+		fmt.Printf("Error: bad number of arguments (%d provided)\n", l)
 	}
 }
 
