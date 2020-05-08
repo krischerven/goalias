@@ -19,7 +19,7 @@ func main() {
 	os.Args = os.Args[1:]
 	// create registry files
 	if err := os.MkdirAll(files.Dir(registry), 0755); err != nil {
-		fmt.Print(fmt.Sprintf("Go Error: '%s'", err))
+		fmt.Print(goerr(err))
 		if strings.HasSuffix(err.Error(), "permission denied") {
 			fmt.Print(" (try running goalias with sudo the first time)")
 		}
@@ -27,7 +27,7 @@ func main() {
 		os.Exit(0)
 	} else if !files.Exists(registry) {
 		if _, err := os.Create(registry); err != nil {
-			fmt.Println(fmt.Sprintf("Go Error: '%s'", err))
+			fmt.Println(goerr(err))
 			os.Exit(0)
 		} else {
 			fmt.Println(fmt.Sprintf("Created registry at %s", registry))
@@ -70,7 +70,7 @@ func main() {
 			file := files.Bin(os.Args[1])
 			s, err := files.Read(file)
 			if err != nil {
-				fmt.Println(fmt.Sprintf("Go Error: '%s'", err))
+				fmt.Println(goerr(err))
 			} else {
 				fmt.Println(fmt.Sprintf("# %s\n", file) + s)
 			}
@@ -99,4 +99,8 @@ func main() {
 
 func unimplemented(i uint) {
 	panic(fmt.Sprintf("unimplemented (%d)", i))
+}
+
+func goerr(e error) string {
+	return fmt.Sprintf("Go Error: '%s'", e)
 }
