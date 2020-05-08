@@ -72,7 +72,7 @@ func main() {
 			fmt.Println()
 			os.Exit(0)
 		case "debug":
-			ms := runtime.MemStats{}
+			var ms runtime.MemStats
 			runtime.ReadMemStats(&ms)
 			fmt.Printf("Debugger:\n\n")
 			fmt.Printf("Heap Size: %d KiB\n", ms.HeapAlloc/1024)
