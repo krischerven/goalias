@@ -137,8 +137,12 @@ func main() {
 					goerr,
 				)
 				if strings.Contains(os.Args[2], "cd ") {
-					fmt.Println("It seems that your alias contains 'cd'.\n" +
+					fmt.Println("Warning: It seems that your alias contains 'cd'.\n" +
 						"This may cause some errors if you use it a lot.")
+				}
+				if strings.Contains(os.Args[2], "../") {
+					fmt.Println("Warning: It seems that your alias contains '../'.\n" +
+						"It may not won't work as intended.")
 				}
 			}
 		case "unset":
