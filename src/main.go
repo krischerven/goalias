@@ -142,7 +142,7 @@ func main() {
 				}
 				if strings.Contains(os.Args[2], "../") {
 					fmt.Println("Warning: It seems that your alias contains '../'.\n" +
-						"It may not won't work as intended.")
+						"It may not work as intended.")
 				}
 			}
 		case "unset":
