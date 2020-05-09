@@ -70,7 +70,7 @@ func main() {
 			fmt.Println("goalias [--]help")
 			fmt.Println("goalias debug")
 			fmt.Println("goalias set [aliasname] [alias]")
-			fmt.Println("goalias unset [aliasname]")
+			fmt.Println("goalias unset [aliasname|!]")
 			fmt.Println("goalias check [aliasname]")
 			fmt.Println()
 			os.Exit(0)
@@ -83,7 +83,7 @@ func main() {
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
 		default:
-			fmt.Println("Usage: 'goalias [--v?] [help|debug]' or 'goalias [--v?] [set|unset|check] [aliasname] [alias?]'")
+			fmt.Println("Usage: 'goalias [--v?] [help|debug]' or 'goalias [--v?] [set|unset|check] [aliasname|!] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
