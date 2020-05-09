@@ -66,6 +66,7 @@ func main() {
 		case "help", "--help":
 			fmt.Printf("Usage:\n\n")
 			fmt.Println("goalias [--]help")
+			fmt.Println("goalias debug")
 			fmt.Println("goalias set [aliasname] [alias]")
 			fmt.Println("goalias unset [aliasname]")
 			fmt.Println("goalias check [aliasname]")
