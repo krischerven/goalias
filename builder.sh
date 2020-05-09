@@ -34,4 +34,6 @@ if [ -f /tmp/goalias/src/src.exe ]; then
 	cp /tmp/goalias/src/src.exe "$PWD/bin/goalias.exe"
 fi
 
-echo "done"
+if [ "$1" != "--silent" ]; then
+	echo "done"
+fi

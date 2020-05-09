@@ -1,6 +1,6 @@
 #!/bin/bash
 (rm bin/goalias) > /dev/null 2>&1
-./builder.sh
+./builder.sh --silent
 if [ -f bin/goalias ]; then
 	(sudo rm /usr/local/bin/goalias) > /dev/null 2>&1
 	sudo ln -s "$PWD/bin/goalias" /usr/local/bin/goalias
