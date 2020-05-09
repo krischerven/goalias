@@ -121,6 +121,10 @@ func main() {
 					),
 					goerr,
 				)
+				if strings.Contains(os.Args[2], "cd ") {
+					fmt.Println("It seems that your alias contains 'cd'.\n" +
+						"Currently to change directory you have to run the alias with 'source aliasname'.")
+				}
 			}
 		case "unset":
 			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
