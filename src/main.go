@@ -60,7 +60,9 @@ func main() {
 	}
 	switch l := len(os.Args); l {
 	case 0:
-		fmt.Println("Error: no arguments provided (try 'goalias help')")
+		// no "Error:" because this is not necessarily an error
+		// running 'sudo goalias' creates the registry for the first time
+		fmt.Println("No arguments provided (try 'goalias help')")
 	case 1:
 		switch strings.ToLower(os.Args[0]) {
 		case "help", "--help":
