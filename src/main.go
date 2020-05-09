@@ -115,6 +115,9 @@ func main() {
 			} else {
 				mustroot()
 				register(os.Args[1], os.Args[2])
+				if strings.Contains(os.Args[2], "cd ") {
+					os.Args[2] += "\nexec bash"
+				}
 				handle(
 					ioutil.WriteFile(
 						fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
@@ -124,7 +127,7 @@ func main() {
 				)
 				if strings.Contains(os.Args[2], "cd ") {
 					fmt.Println("It seems that your alias contains 'cd'.\n" +
-						"Currently to change directory you have to run the alias with 'source aliasname'.")
+						"This may cause some errors.")
 				}
 			}
 		case "unset":
