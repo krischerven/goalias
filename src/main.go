@@ -132,17 +132,6 @@ func main() {
 	}
 }
 
-func unimplemented(i uint) {
-	panic(fmt.Sprintf("unimplemented (%d)", i))
-}
-
-func mustroot() {
-	if os.Geteuid() != 0 {
-		fmt.Println("Error: You must be running as the root user to run this command.")
-		os.Exit(0)
-	}
-}
-
 func goerr(e error) string {
 	return fmt.Sprintf("Go Error: '%s'", e)
 }
@@ -152,6 +141,17 @@ func handle(e error, handler func(error) string) {
 		fmt.Println(handler(e))
 		os.Exit(0)
 	}
+}
+
+func mustroot() {
+	if os.Geteuid() != 0 {
+		fmt.Println("Error: You must be running as the root user to run this command.")
+		os.Exit(0)
+	}
+}
+
+func unimplemented(i uint) {
+	panic(fmt.Sprintf("unimplemented (%d)", i))
 }
 
 func register(name string, alias string) {
