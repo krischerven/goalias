@@ -54,3 +54,21 @@ func TestBin(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestDir(t *testing.T) {
+	if Dir("/this/is/a/file/path") != "/this/is/a/file/" {
+		t.FailNow()
+	}
+	if Dir("test") != "" {
+		t.FailNow()
+	}
+	if Dir("a/b") != "a/" {
+		t.FailNow()
+	}
+}
+
+func TestRead(t *testing.T) {
+	// for now, this will always pass
+	// thats because Read() is currently
+	// a wrapper around ioutil.ReadFile()
+}
