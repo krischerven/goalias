@@ -115,6 +115,7 @@ func main() {
 			} else {
 				mustroot()
 				register(os.Args[1], os.Args[2])
+				// hack to make cd work - TODO replace
 				if strings.Contains(os.Args[2], "cd ") {
 					os.Args[2] += "\nexec bash"
 				}
@@ -127,7 +128,7 @@ func main() {
 				)
 				if strings.Contains(os.Args[2], "cd ") {
 					fmt.Println("It seems that your alias contains 'cd'.\n" +
-						"This may cause some errors.")
+						"This may cause some errors if you use it a lot.")
 				}
 			}
 		case "unset":
