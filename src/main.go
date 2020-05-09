@@ -34,7 +34,7 @@ func main() {
 		os.Args = os.Args[0:1]
 	}
 	// for 'goalias set', we want to merge all args >= 2 into the second argument
-	if len(os.Args) > 0 && os.Args[0] == "set" && len(os.Args) > 2 {
+	if len(os.Args) > 0 && (os.Args[0] == "set" || os.Args[0] == "reset") && len(os.Args) > 2 {
 		for i := 3; i < len(os.Args); i++ {
 			os.Args[2] += " "
 			os.Args[2] += os.Args[i]
@@ -70,6 +70,7 @@ func main() {
 			fmt.Println("goalias [--]help")
 			fmt.Println("goalias debug")
 			fmt.Println("goalias set [aliasname] [alias]")
+			fmt.Println("goalias reset [aliasname] [alias]")
 			fmt.Println("goalias unset [aliasname|!]")
 			fmt.Println("goalias check [aliasname]")
 			fmt.Println()
@@ -83,7 +84,7 @@ func main() {
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
 		default:
-			fmt.Println("Usage: 'goalias [--v?] [help|debug]' or 'goalias [--v?] [set|unset|check] [aliasname|!] [alias?]'")
+			fmt.Println("Usage: 'goalias [--v?] [help|debug]' or 'goalias [--v?] [set|reset|unset|check] [aliasname|!] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
@@ -94,6 +95,8 @@ func main() {
 			fmt.Printf("# %s\n%s\n", file, b)
 		case "set":
 			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
+		case "reset":
+			fmt.Println("Error: goalias reset takes exactly two arguments (1 provided)")
 		case "unset":
 			mustroot()
 			if os.Args[1] == "!" {
@@ -114,6 +117,7 @@ func main() {
 			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
 		}
 	case 3:
+	top:
 		switch strings.ToLower(os.Args[0]) {
 		case "check":
 			fmt.Println("Error: goalias check takes exactly one argument (2 provided)")
@@ -155,6 +159,14 @@ func main() {
 						"It may not work as intended.")
 				}
 			}
+		case "reset":
+			mustroot()
+			if registered(os.Args[1]) {
+				unregister(os.Args[1])
+				handle(os.Remove(fmt.Sprintf("/usr/local/bin/%s", os.Args[1])), goerr)
+			}
+			os.Args[0] = "set"
+			goto top
 		case "unset":
 			fmt.Println("Error: goalias unset takes exactly one argument (2 provided)")
 		default:
