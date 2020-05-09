@@ -98,7 +98,7 @@ func main() {
 				unregister(os.Args[1])
 				handle(os.Remove(fmt.Sprintf("/usr/local/bin/%s", os.Args[1])), goerr)
 			} else {
-				fmt.Println("Error: this alias is not registered.")
+				fmt.Println("Error: this alias does not exist.")
 			}
 		default:
 			fmt.Printf("Error: unrecognized argument '%s'\n", os.Args[0])
