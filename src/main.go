@@ -96,7 +96,15 @@ func main() {
 			fmt.Println("Error: goalias set takes exactly two arguments (1 provided)")
 		case "unset":
 			mustroot()
-			if registered(os.Args[1]) {
+			if os.Args[1] == "!" {
+				for _, file := range unregister_all() {
+					if len(file) > 0 {
+						handle(os.Remove(fmt.Sprintf("/usr/local/bin/%s", file)), goerr)
+						fmt.Println(fmt.Sprintf("Removed %s", file))
+					}
+				}
+				fmt.Println("Successfully removed all aliases.")
+			} else if registered(os.Args[1]) {
 				unregister(os.Args[1])
 				handle(os.Remove(fmt.Sprintf("/usr/local/bin/%s", os.Args[1])), goerr)
 			} else {
@@ -210,4 +218,23 @@ func unregister(name string) {
 		bytes.Join(lines, []byte("\n")),
 		0755,
 	)
+}
+
+func unregister_all() [][]byte {
+	b, err := files.Read(registry)
+	handle(err, goerr)
+	lines := bytes.Split(b, []byte("\n"))
+	ret := make([][]byte, len(lines))
+	for i, line := range lines {
+		ret[i] = bytes.Split(line, []byte("="))[0]
+	}
+	// prevent trying to remove "/usr/local/bin/" (won't work anyway)
+	// this works as long as the user didn't manually modify the registry
+	ret = ret[0:len(ret)]
+	ioutil.WriteFile(
+		registry,
+		nil,
+		0755,
+	)
+	return ret
 }
