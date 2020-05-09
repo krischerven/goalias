@@ -18,8 +18,7 @@ func TestExists(t *testing.T) {
 	autopass(t)
 	if !Exists("/usr/bin/ls") {
 		t.FailNow()
-	}
-	if Exists("/usr/bin/notafile") {
+	} else if Exists("/usr/bin/notafile") {
 		t.FailNow()
 	}
 }
@@ -28,8 +27,7 @@ func TestBinExists(t *testing.T) {
 	autopass(t)
 	if !BinExists("ls") {
 		t.FailNow()
-	}
-	if BinExists("notafile") {
+	} else if BinExists("notafile") {
 		t.FailNow()
 	}
 }
@@ -39,8 +37,7 @@ func TestUsrLocalBinExists(t *testing.T) {
 	autopass(t)
 	if !UsrLocalBinExists("goalias-test") {
 		t.FailNow()
-	}
-	if UsrLocalBinExists("notafile") {
+	} else if UsrLocalBinExists("notafile") {
 		t.FailNow()
 	}
 }
@@ -49,8 +46,7 @@ func TestUsrLocalBinExists(t *testing.T) {
 func TestBin(t *testing.T) {
 	if Bin("goalias-test") != "/usr/local/bin/goalias-test" {
 		t.FailNow()
-	}
-	if Bin("ls") != "/usr/bin/ls" {
+	} else if Bin("ls") != "/usr/bin/ls" {
 		t.FailNow()
 	}
 }
@@ -58,11 +54,9 @@ func TestBin(t *testing.T) {
 func TestDir(t *testing.T) {
 	if Dir("/this/is/a/file/path") != "/this/is/a/file/" {
 		t.FailNow()
-	}
-	if Dir("test") != "" {
+	} else if Dir("test") != "" {
 		t.FailNow()
-	}
-	if Dir("a/b") != "a/" {
+	} else if Dir("a/b") != "a/" {
 		t.FailNow()
 	}
 }
