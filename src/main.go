@@ -70,6 +70,7 @@ func main() {
 			fmt.Printf("Usage:\n\n")
 			fmt.Println("goalias [--]help")
 			fmt.Println("goalias debug")
+			fmt.Println("goalias regcheck")
 			fmt.Println("goalias set [aliasname] [alias]")
 			fmt.Println("goalias reset [aliasname] [alias]")
 			fmt.Println("goalias unset [aliasname|!]")
@@ -84,8 +85,12 @@ func main() {
 			fmt.Println("# Live Objects:", ms.HeapObjects)
 			fmt.Println("# Allocs:", ms.Mallocs)
 			fmt.Println("# Frees:", ms.Frees)
+		case "regcheck":
+			b, err := files.Read(registry)
+			handle(err, goerr)
+			fmt.Println(string(b))
 		default:
-			fmt.Println("Usage: 'goalias [--v?] [help|debug]' or 'goalias [--v?] [set|reset|unset|check] [aliasname|!] [alias?]'")
+			fmt.Println("Usage: 'goalias [--v?] [help|debug|regcheck]' or 'goalias [--v?] [set|reset|unset|check] [aliasname|!] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
