@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# run vet.sh first to catch Sprintf() errors and such
-./vet.sh
-
-# run tests to catch other errors
-go test ./...
+# vet, test, fmt
+./test.sh
 
 # create the temporary build directory
 mkdir -p /tmp/goalias
