@@ -14,7 +14,7 @@ import (
 const (
 	// the place where we keep track of our aliases
 	registry = "/etc/goalias/registry.txt"
-	cdhack = false
+	cdhack   = false
 )
 
 var (
@@ -138,7 +138,7 @@ func main() {
 						" To see a list of your goaliases, run 'cat /etc/goalias/registry.txt'\""
 					out += "\n\texit 0"
 					out += "\nfi"
-					return out+"\n"
+					return out + "\n"
 				}("")
 				if strings.Contains(tmp, "cd ") {
 					if cdhack {
@@ -151,8 +151,8 @@ func main() {
 							out += "\n\techo \"This alias changes the working directory. To use it, run it with 'source aliasname' or '. aliasname'\""
 							out += "\n\texit 0"
 							out += "\nfi"
-							return out+"\n"
-						} (os.Args[2])
+							return out + "\n"
+						}(os.Args[2])
 					}
 				}
 				os.Args[2] += tmp
