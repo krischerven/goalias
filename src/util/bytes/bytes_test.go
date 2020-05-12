@@ -17,11 +17,19 @@ func TestContains(t *testing.T) {
 		native.Contains([]byte("this is a sentence"), []byte("is a ")) {
 		t.FailNow()
 	}
+	if Contains([]byte("this is a sentence"), []byte("isn't a ")) !=
+		native.Contains([]byte("this is a sentence"), []byte("isn't a ")) {
+		t.FailNow()
+	}
 }
 
 func TestHasPrefix(t *testing.T) {
 	if HasPrefix([]byte("this is a sentence"), []byte("this is ")) !=
 		native.HasPrefix([]byte("this is a sentence"), []byte("this is ")) {
+		t.FailNow()
+	}
+	if HasPrefix([]byte("this is a sentence"), []byte("this isn't ")) !=
+		native.HasPrefix([]byte("this is a sentence"), []byte("this isn't ")) {
 		t.FailNow()
 	}
 }
