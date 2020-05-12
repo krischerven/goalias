@@ -168,7 +168,7 @@ func main() {
 					}
 				}
 				os.Args[2] += tmp
-				if strings.Contains(os.Args[2][0:len(os.Args[2])-1], "\n") {
+				if strings.Contains(tmp, "\n") {
 					fmt.Println("Error: aliases cannot contain a linebreak.")
 					unregister(os.Args[1])
 				} else {
