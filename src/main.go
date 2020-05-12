@@ -168,22 +168,26 @@ func main() {
 					}
 				}
 				os.Args[2] += tmp
-				handle(
-					ioutil.WriteFile(
-						fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
-						[]byte(fmt.Sprintf("%s", os.Args[2])), 0755,
-					),
-					goerr,
-				)
-				//
-				if cdhack && strings.Contains(os.Args[2], "cd ") {
-					fmt.Println("Warning: It seems that your alias contains 'cd'.\n" +
-						"This may cause some errors if you use it a lot.")
-				}
-				//
-				if strings.Contains(os.Args[2], "../") {
-					fmt.Println("Warning: It seems that your alias contains '../'.\n" +
-						"It may not work as intended.")
+				if strings.Contains(os.Args[2], "\n") {
+					fmt.Println("Error: aliases cannot contain a linebreak.")
+				} else {
+					handle(
+						ioutil.WriteFile(
+							fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
+							[]byte(fmt.Sprintf("%s", os.Args[2])), 0755,
+						),
+						goerr,
+					)
+					//
+					if cdhack && strings.Contains(os.Args[2], "cd ") {
+						fmt.Println("Warning: It seems that your alias contains 'cd'.\n" +
+							"This may cause some errors if you use it a lot.")
+					}
+					//
+					if strings.Contains(os.Args[2], "../") {
+						fmt.Println("Warning: It seems that your alias contains '../'.\n" +
+							"It may not work as intended.")
+					}
 				}
 			}
 		case "reset":
