@@ -45,6 +45,7 @@ func TestUsrLocalBinExists(t *testing.T) {
 
 // For this to pass, you need to create /usr/local/bin/goalias-test
 func TestBin(t *testing.T) {
+	autopass(t)
 	if Bin("goalias-test") != "/usr/local/bin/goalias-test" {
 		t.FailNow()
 	} else if Bin("ls") != "/usr/bin/ls" {
@@ -53,6 +54,7 @@ func TestBin(t *testing.T) {
 }
 
 func TestDir(t *testing.T) {
+	autopass(t)
 	if Dir("/this/is/a/file/path") != "/this/is/a/file/" {
 		t.FailNow()
 	} else if Dir("test") != "" {
@@ -65,6 +67,7 @@ func TestDir(t *testing.T) {
 // For this to pass, you need to create /usr/local/bin/goalias-test
 // and make sure it contains the exact text 'hello world\n'
 func TestRead(t *testing.T) {
+	autopass(t)
 	if b, err := Read("/usr/local/bin/goalias-test"); !bytes.Equal(b, []byte("hello world\n")) ||
 		err != nil {
 		t.FailNow()
