@@ -1,6 +1,7 @@
 package files
 
 import (
+	"github.com/krischerven/goalias/src/util/bytes"
 	"runtime"
 	"testing"
 )
@@ -61,8 +62,11 @@ func TestDir(t *testing.T) {
 	}
 }
 
+// For this to pass, you need to create /usr/local/bin/goalias-test
+// and make sure it contains the exact text 'hello world\n'
 func TestRead(t *testing.T) {
-	// for now, this will always pass
-	// thats because Read() is currently
-	// a wrapper around ioutil.ReadFile()
+	if b, err := Read("/usr/local/bin/goalias-test"); !bytes.Equal(b, []byte("hello world\n")) ||
+		err != nil {
+		t.FailNow()
+	}
 }
