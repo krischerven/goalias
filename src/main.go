@@ -2,8 +2,8 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
+	"github.com/krischerven/goalias/src/util/bytes"
 	"github.com/krischerven/goalias/src/util/files"
 	"io/ioutil"
 	"os"
@@ -82,7 +82,7 @@ func main() {
 			b, err := files.Read(registry)
 			handle(err, goerr)
 			for _, line := range bytes.Split(b, []byte("\n")) {
-				fmt.Println(string(bytes.Split(line, []byte("="))[0]))
+				fmt.Println(string(bytes.SplitFirstsLast(line, []byte("="))[0]))
 			}
 		case "debug":
 			var ms runtime.MemStats
@@ -269,7 +269,7 @@ func unregister_all() [][]byte {
 	lines := bytes.Split(b, []byte("\n"))
 	ret := make([][]byte, len(lines))
 	for i, line := range lines {
-		ret[i] = bytes.Split(line, []byte("="))[0]
+		ret[i] = bytes.SplitFirstsLast(line, []byte("="))[0]
 	}
 	// prevent trying to remove "/usr/local/bin/" (won't work anyway)
 	// this works as long as the user didn't manually modify the registry
