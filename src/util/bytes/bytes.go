@@ -4,12 +4,12 @@ import (
 	"bytes"
 )
 
-func Split(b []byte, bb []byte) [][]byte {
-	return bytes.Split(b, bb)
-}
-
 func Contains(b []byte, bb []byte) bool {
 	return bytes.Contains(b, bb)
+}
+
+func Equal(b []byte, bb []byte) bool {
+	return bytes.Equal(b, bb)
 }
 
 func HasPrefix(b []byte, bb []byte) bool {
@@ -20,8 +20,8 @@ func Join(b [][]byte, bb []byte) []byte {
 	return bytes.Join(b, bb)
 }
 
-func Equal(b []byte, bb []byte) bool {
-	return bytes.Equal(b, bb)
+func Split(b []byte, bb []byte) [][]byte {
+	return bytes.Split(b, bb)
 }
 
 func SplitFirstsLast(b []byte, splitter []byte) [2][]byte {
