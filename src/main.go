@@ -69,6 +69,7 @@ func main() {
 		case "help", "--help":
 			fmt.Printf("Usage:\n\n")
 			fmt.Println("goalias [--]help")
+			fmt.Println("goalias list")
 			fmt.Println("goalias debug")
 			fmt.Println("goalias regcheck")
 			fmt.Println("goalias set [aliasname] [alias]")
@@ -77,6 +78,12 @@ func main() {
 			fmt.Println("goalias check [aliasname]")
 			fmt.Println()
 			os.Exit(0)
+		case "list":
+			b, err := files.Read(registry)
+			handle(err, goerr)
+			for _, line := range bytes.Split(b, []byte("\n")) {
+				fmt.Println(string(bytes.Split(line, []byte("="))[0]))
+			}
 		case "debug":
 			var ms runtime.MemStats
 			runtime.ReadMemStats(&ms)
@@ -90,7 +97,7 @@ func main() {
 			handle(err, goerr)
 			fmt.Println(string(b))
 		default:
-			fmt.Println("Usage: 'goalias [--v?] [help|debug|regcheck]' or 'goalias [--v?] [set|reset|unset|check] [aliasname|!] [alias?]'")
+			fmt.Println("Usage: 'goalias [--v?] [help|list|debug|regcheck]' or 'goalias [--v?] [set|reset|unset|check] [aliasname|!] [alias?]'")
 		}
 	case 2:
 		switch strings.ToLower(os.Args[0]) {
