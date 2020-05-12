@@ -5,13 +5,6 @@ import (
 	"testing"
 )
 
-func TestSplit(t *testing.T) {
-	if !Equal(Split([]byte("this is a sentence"), []byte(" "))[2],
-		native.Split([]byte("this is a sentence"), []byte(" "))[2]) {
-		t.FailNow()
-	}
-}
-
 func TestContains(t *testing.T) {
 	if Contains([]byte("this is a sentence"), []byte("is a ")) !=
 		native.Contains([]byte("this is a sentence"), []byte("is a ")) {
@@ -19,6 +12,14 @@ func TestContains(t *testing.T) {
 	}
 	if Contains([]byte("this is a sentence"), []byte("isn't a ")) !=
 		native.Contains([]byte("this is a sentence"), []byte("isn't a ")) {
+		t.FailNow()
+	}
+}
+
+func TestEqual(t *testing.T) {
+	if Equal([]byte("abc"), []byte("abc")) != native.Equal([]byte("abc"), []byte("abc")) {
+		t.FailNow()
+	} else if Equal([]byte("abc"), []byte("def")) != native.Equal([]byte("abc"), []byte("def")) {
 		t.FailNow()
 	}
 }
@@ -43,10 +44,9 @@ func TestJoin(t *testing.T) {
 	}
 }
 
-func TestEqual(t *testing.T) {
-	if Equal([]byte("abc"), []byte("abc")) != native.Equal([]byte("abc"), []byte("abc")) {
-		t.FailNow()
-	} else if Equal([]byte("abc"), []byte("def")) != native.Equal([]byte("abc"), []byte("def")) {
+func TestSplit(t *testing.T) {
+	if !Equal(Split([]byte("this is a sentence"), []byte(" "))[2],
+		native.Split([]byte("this is a sentence"), []byte(" "))[2]) {
 		t.FailNow()
 	}
 }
