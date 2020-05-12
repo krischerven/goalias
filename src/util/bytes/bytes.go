@@ -20,6 +20,10 @@ func Join(b [][]byte, bb []byte) []byte {
 	return bytes.Join(b, bb)
 }
 
+func Equal(b []byte, bb []byte) bool {
+	return bytes.Equal(b, bb)
+}
+
 func SplitFirstsLast(b []byte, splitter []byte) [2][]byte {
 	ret := bytes.Split(b, splitter)
 	switch len(ret) {
