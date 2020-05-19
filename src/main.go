@@ -122,7 +122,7 @@ func main() {
 				for _, file := range unregister_all() {
 					if len(file) > 0 {
 						handle(os.Remove(fmt.Sprintf("/usr/local/bin/%s", file)), goerr)
-						fmt.Println(fmt.Sprintf("Removed %s", file))
+						fmt.Printf("Removed %s\n", file)
 					}
 				}
 				fmt.Println("Successfully removed all aliases.")
