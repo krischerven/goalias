@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/krischerven/goalias/src/util/bytes"
 	"runtime"
+	"strings"
 	"testing"
 )
 
@@ -18,6 +19,8 @@ func autopass(t *testing.T) {
 
 func failstr(t *testing.T, want string, got string) {
 	defer t.FailNow()
+	want = strings.Replace(want, "\n", "\\n", -1)
+	got = strings.Replace(got, "\n", "\\n", -1)
 	fmt.Printf("Test failure (want: %s, got: %s)\n", want, got)
 }
 
