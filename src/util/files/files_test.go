@@ -1,6 +1,7 @@
 package files
 
 import (
+	"fmt"
 	"github.com/krischerven/goalias/src/util/bytes"
 	"runtime"
 	"testing"
@@ -13,6 +14,11 @@ func autopass(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		t.SkipNow()
 	}
+}
+
+func failstr(t *testing.T, want string, got string) {
+	defer t.FailNow()
+	fmt.Printf("Test failure (want: %s, got: %s)\n", want, got)
 }
 
 func TestExists(t *testing.T) {
@@ -47,20 +53,20 @@ func TestUsrLocalBinExists(t *testing.T) {
 func TestBin(t *testing.T) {
 	autopass(t)
 	if Bin("goalias-test") != "/usr/local/bin/goalias-test" {
-		t.FailNow()
+		failstr(t, "/usr/local/bin/goalias-test", Bin("goalias-test"))
 	} else if Bin("ls") != "/usr/bin/ls" {
-		t.FailNow()
+		failstr(t, "/usr/bin/ls", Bin("ls"))
 	}
 }
 
 func TestDir(t *testing.T) {
 	autopass(t)
 	if Dir("/this/is/a/file/path") != "/this/is/a/file/" {
-		t.FailNow()
+		failstr(t, "/this/is/a/file/", Dir("/this/is/a/file/path"))
 	} else if Dir("test") != "" {
-		t.FailNow()
+		failstr(t, "", Dir("test"))
 	} else if Dir("a/b") != "a/" {
-		t.FailNow()
+		failstr(t, "a/", Dir("a/b"))
 	}
 }
 
@@ -70,6 +76,10 @@ func TestRead(t *testing.T) {
 	autopass(t)
 	if b, err := Read("/usr/local/bin/goalias-test"); !bytes.Equal(b, []byte("hello world\n")) ||
 		err != nil {
-		t.FailNow()
+		if err == nil {
+			failstr(t, string([]byte("hello world\n")), string(b))
+		} else {
+			t.FailNow()
+		}
 	}
 }
