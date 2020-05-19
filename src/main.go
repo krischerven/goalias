@@ -178,20 +178,22 @@ func main() {
 					fmt.Println("Error: aliases cannot contain a linebreak.")
 					unregister(os.Args[1])
 				} else {
-					os.Args[2] += func(name string, alias string, out string) string {
-						out += fmt.Sprintf("\n%s_func() {", name)
-						out += "\n\tif [ \"$1\" != \"\" ]; then"
-						out += fmt.Sprintf("\n\t\t/usr/local/bin/%s \"$1\"", name)
-						out += "\n\telse"
-						out += fmt.Sprintf("\n\t\t%s", alias)
-						out += "\n\tfi"
-						out += "\n}"
-						out += fmt.Sprintf("\nif [ $(type -t %s) != \"alias\" ]; then", name)
-						out += fmt.Sprintf("\n\techo \"You can now run %s without sourcing it (in this session)\"", name)
-						out += "\nfi"
-						out += fmt.Sprintf("\nalias %s='%s_func'", name, name)
-						return out
-					}(os.Args[1], tmp, "")
+					if strings.Contains(os.Args[2], "cd ") {
+						os.Args[2] += func(name string, alias string, out string) string {
+							out += fmt.Sprintf("\n%s_func() {", name)
+							out += "\n\tif [ \"$1\" != \"\" ]; then"
+							out += fmt.Sprintf("\n\t\t/usr/local/bin/%s \"$1\"", name)
+							out += "\n\telse"
+							out += fmt.Sprintf("\n\t\t%s", alias)
+							out += "\n\tfi"
+							out += "\n}"
+							out += fmt.Sprintf("\nif [ $(type -t %s) != \"alias\" ]; then", name)
+							out += fmt.Sprintf("\n\techo \"You can now run %s without sourcing it (in this session)\"", name)
+							out += "\nfi"
+							out += fmt.Sprintf("\nalias %s='%s_func'", name, name)
+							return out
+						}(os.Args[1], tmp, "")
+					}
 					handle(
 						ioutil.WriteFile(
 							fmt.Sprintf("/usr/local/bin/%s", os.Args[1]),
