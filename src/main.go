@@ -160,7 +160,10 @@ func main() {
 				}("")
 				if strings.Contains(tmp, "cd ") {
 					if cdhack {
-						// hack to make cd work (DEPRECATED)
+						// dangerous hack to make cd work
+						// destroys recent bash history
+						// and creates an extra bash instance
+						// which will stay around until it is manually killed
 						os.Args[2] += "\nexec bash"
 					} else {
 						os.Args[2] = func(out string) string {
@@ -178,7 +181,7 @@ func main() {
 					fmt.Println("Error: aliases cannot contain a linebreak.")
 					unregister(os.Args[1])
 				} else {
-					if strings.Contains(os.Args[2], "cd ") {
+					if strings.Contains(tmp, "cd ") {
 						os.Args[2] += func(name string, alias string, out string) string {
 							out += fmt.Sprintf("\n%s_func() {", name)
 							out += "\n\tif [ \"$1\" != \"\" ]; then"
